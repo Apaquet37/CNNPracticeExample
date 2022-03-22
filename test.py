@@ -26,7 +26,7 @@ model.add(keras.layers.layer3)
 model = keras.Sequential()
 model.add(keras.layers.Conv2D(32, 3, input_shape=(32, 32, 3), activation='relu', padding='same'))
 
-model.add(keras.layers.Dropoyt(0.2))
+model.add(keras.layers.Dropout(0.2))
 
 model.add(keras.layers.BatchNormalization())
 
@@ -34,3 +34,53 @@ model.add(keras.layers.Conv2D(64, 3, activation='relu', padding='same'))
 model.add(keras.layers.MaxPooling2D(2))
 model.add(keras.layers.Dropout(.2))
 model.add(keras.layers.BatchNormalization())
+
+model.add(keras.layers.Conv2D(64, 3, activation='relu', padding='same'))
+model.add(keras.layers.MaxPooling2D(2))
+model.add(keras.layers.Dropout(.2))
+model.add(keras.layers.BatchNormalization())
+
+model.add(keras.layers.Conv2D(128, 3, activation='relu', padding='same'))
+model.add(keras.layers.Dropout(.2))
+model.add(keras.layers.BatchNormalization())
+
+model.add(keras.layers.Conv2D(64, 3, activation='relu', padding='same'))
+model.add(keras.layers.MaxPooling2D(2))
+model.add(keras.layers.Dropout(.2))
+model.add(keras.layers.BatchNormalization())
+
+model.add(keras.layers.Conv2D(128, 3, activation='relu', padding='same'))
+model.add(keras.layers.Dropout(.2))
+model.add(keras.layers.BatchNormalization())
+
+model.add(kera.layer.Flatten())
+model.add(keras.layers.Dropout(.2))
+
+model.add(keras.layers.Dense(32, activation='relu'))
+model.add(keras.layers.Dropout(.3))
+model.add(keras.layers.BatchNormalization())
+
+model.add(keras.layers.Dense(class_num, activation='softmax'))
+
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy', 'val_accuracy'])
+
+print(model.summary())
+
+
+#Training--------------------------------------------------------
+
+numpy.random.seed(seed)
+history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=25, batch_size=64)
+
+#Evaluation------------------------------------------------------
+
+scores = model.evaluate(X_test, y_test, verbose=0)
+print("Accuracy: %.2f%" % (scores[1]*100))
+
+#Visualizing history side note:
+
+#import pandas as pd
+#import matplotlib.pyplot as plt
+
+#pd.DataFrame(history.history).plot()
+#plt.show()
