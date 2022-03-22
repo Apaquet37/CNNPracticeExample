@@ -18,10 +18,11 @@ y_train = np_utils.to_categorical(y_train)
 y_test = np_utils.to_categorical(y_test)
 class_num = y_test.shape[1]
 
-model = Sequential()
-model.add(keras.layers.layer1)
-model.add(keras.layers.layer2)
-model.add(keras.layers.layer3)
+model = keras.Sequential([
+    keras.layers.layer1,
+    keras.layers.layer2,
+    keras.layers.layer3
+])
 
 model = keras.Sequential()
 model.add(keras.layers.Conv2D(32, 3, input_shape=(32, 32, 3), activation='relu', padding='same'))
@@ -53,7 +54,7 @@ model.add(keras.layers.Conv2D(128, 3, activation='relu', padding='same'))
 model.add(keras.layers.Dropout(.2))
 model.add(keras.layers.BatchNormalization())
 
-model.add(kera.layer.Flatten())
+model.add(keras.layer.Flatten())
 model.add(keras.layers.Dropout(.2))
 
 model.add(keras.layers.Dense(32, activation='relu'))
@@ -75,7 +76,7 @@ history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=2
 #Evaluation------------------------------------------------------
 
 scores = model.evaluate(X_test, y_test, verbose=0)
-print("Accuracy: %.2f%" % (scores[1]*100))
+print("Accuracy: %.2f%%" % (scores[1]*100))
 
 #Visualizing history side note:
 
